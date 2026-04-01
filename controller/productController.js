@@ -135,11 +135,11 @@ export const updateProduct = async (req, res) => {
     if (existingImages) {
       const KeepIds = JSON.parse(existingImages);
 
-      updateImages = product.productImg.filter((img) =>
+      updateImages = product.productImage.filter((img) =>
         KeepIds.includes(img.public_id),
       );
 
-      const removedImages = product.productImg.filter(
+      const removedImages = product.productImage.filter(
         (img) => !KeepIds.includes(img.public_id),
       );
 
@@ -147,7 +147,7 @@ export const updateProduct = async (req, res) => {
         await cloudinary.uploader.destroy(img.public_id);
       }
     } else {
-      updateImages = product.productImg;
+      updateImages = product.productImage;
     }
 
     if (req.files && req.files.length > 0) {
@@ -171,7 +171,7 @@ export const updateProduct = async (req, res) => {
     product.productPrice = productPrice || product.productPrice;
     product.category = category || product.category;
     product.brand = brand || product.brand;
-    product.productImg = updateImages;
+    product.productImage = updateImages;
 
     await product.save();
 
